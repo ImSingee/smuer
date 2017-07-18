@@ -215,10 +215,10 @@ if __name__ == '__main__':
     #this semester
     print(c.get_average_point())
     
-=======
-    c = Caculate(username='201610311090', password='', which_semester=2)
+
+    c = Caculate(username='', password='', which_semester=2)
     print(c.get_average_point())
->>>>>>> 260516f19dcc6cb13bc8ff702b009733f3bc27c3
+
     this_year_ave = caculate_more_average(username='', password='', semester_id_list=[1,2])
     print(this_year_ave)
 
