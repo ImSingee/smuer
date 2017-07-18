@@ -210,7 +210,7 @@ def caculate_more_average(username=None, password=None, semester_id_list=None):
 
 
 if __name__ == '__main__':
-<<<<<<< HEAD
+
     c = Caculate(username='', password='', which_semester=2)
     #this semester
     print(c.get_average_point())
