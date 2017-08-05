@@ -1,4 +1,5 @@
 #-*-coding:utf-8-*-
+#coding=utf-8
 #! python3
 
 #============
@@ -109,11 +110,14 @@ class Fourth_request(object):
     def __init__(self, username=None, password=None, which_semester=None):
         semester_id = 75+20*(which_semester-1)
         url = 'http://jwxt.shmtu.edu.cn/shmtu/teach/grade/course/person!search.action?semesterId=%s&projectType=' % (semester_id)
-        r = Third_request(username=username, password=password)
-        headers = {'Cookie': r.get_cookie()}
-        r = requests.post(url, headers=headers)
-        self.headers = r.headers
-        self.content = r.text
+        try:
+            r = Third_request(username=username, password=password)
+            headers = {'Cookie': r.get_cookie()}
+            r = requests.post(url, headers=headers)
+            self.headers = r.headers
+            self.content = r.text
+        except Exception as e:
+            print(e)
 
     def get_text(self):
         return self.content
@@ -167,11 +171,16 @@ class Handle_row(object):
     def get_point(self):
         return self.row[13]
 
+
+
+
 class Caculate(object):
     def __init__(self, username=None, password=None, which_semester=None):
         t = Table(username=username, password=password, which_semester=which_semester)
         table = t.get_table()
+        #总学分
         credit_sum = 0
+        #总的（学分*绩点）
         cp_sum = 0
         for row in table:
             r = Handle_row(row)
@@ -181,7 +190,11 @@ class Caculate(object):
             credit_sum += credit
         self.cp_sum = cp_sum
         self.credit_sum = credit_sum
-        self.average_point = cp_sum/credit_sum
+        try:
+            self.average_point = cp_sum/credit_sum
+        except Exception as e:
+            print(e)
+            print("")
     def get_cp_sum(self):
         return self.cp_sum
     def get_average_point(self):
@@ -189,8 +202,43 @@ class Caculate(object):
     def get_credit_sum(self):
         return self.credit_sum
 
+def construct_dict(**kw):
+    return kw
 
-def caculate_more_average(username=None, password=None, semester_id_list=None):
+def get_grade_table(username, password, semester_id=None):
+    t = Table(username=username,
+              password=password,
+              which_semester=semester_id,
+              )
+    raw_table = t.get_table()
+
+    new_table = []
+    for row in raw_table:
+        r = Handle_row(row)
+        row_dict = construct_dict(year=r.get_year(),
+                                  semester_id=r.get_semester(),
+                                  course_name=r.get_name(),
+                                  type=r.get_type(),
+                                  kind=r.get_kind(),
+                                  id=r.get_id(),
+                                  order=r.get_order(),
+                                  credit=r.get_credit(),
+                                  status=r.get_status(),
+                                  point=r.get_point(),
+                                  result=r.get_result()
+                                  )
+        new_table.append(row_dict)
+
+    return new_table
+
+    
+
+
+
+def caculate_grade(*args, username=None, password=None):
+
+    #cp : produt of (credit*point)
+    semester_id_list = args
     cp_sum_list = []
     credit_sum_list = []
     for s in semester_id_list:
@@ -206,38 +254,25 @@ def caculate_more_average(username=None, password=None, semester_id_list=None):
     total_cp = 0
     for cp in cp_sum_list:
         total_cp += cp
-    return round(total_cp/total_credit,2)
+    try:
+        result = total_cp/total_credit
+        return round(result, 2)
+    except Exception as e:
+        print(e)
+        return 
 
 
 if __name__ == '__main__':
+    
+    print(caculate_grade(1, 2, username='', password=''))
 
-    c = Caculate(username='', password='', which_semester=2)
-    #this semester
-    print(c.get_average_point())
+    # c = Caculate(username='', password='', which_semester=2)
+    # #this semester
+    # print(c.get_average_point())
     
 
-    c = Caculate(username='', password='', which_semester=2)
-    print(c.get_average_point())
+    # c = Caculate(username='', password='', which_semester=2)
+    # print(c.get_average_point())
 
-    this_year_ave = caculate_more_average(username='', password='', semester_id_list=[1,2])
-    print(this_year_ave)
-
-
-
-
-    
-
-
-
-
-
-
-
-        
-
-
-
-
-    
-
-
+    # this_year_ave = caculate_more_average(username='', password='', semester_id_list=[1,2])
+    # print(this_year_ave)

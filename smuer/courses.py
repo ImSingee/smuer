@@ -1,4 +1,5 @@
 #-*-coding:utf-8-*-
+#coding=utf-8
 #! python3
 
 #============
@@ -192,41 +193,61 @@ class Lession():
     def __init__(self, info):
         self.info = info
         
+        #序号
     def num(self):
         return self.info[0]
 
     def teacher(self):
         return self.info[1]
-
+        #课程号
     def num2(self):
         return self.info[2]
 
     def name(self):
         return self.info[3]
-
+        
+        #课程号
     def num3(self):
         return self.info[4]
 
     def position(self):
         return self.info[5]
 
+    #一学期下每周是否上课1为是0为否    
     def order(self):
         return self.info[6]
-
+    
+    #周几第几节
     def time(self):
         return self.info[7]
+
     
+def construct_dic(**kw):
+
+    return kw
+
+def get_table(semester_id, username, password):
+    c = Course(which_semester=semester_id, username=username, password=password)
+    info_list = c.get_info_list()
+    table = []
+    for i in info_list:
+        l = Lession(i)
+        lession_dic = construct_dic(teacher=l.teacher(),
+                                    name=l.name(),
+                                    order=l.order(),
+                                    position=l.position(),
+                                    time = l.time(),
+                                    num = l.num(),
+                                    course_id = l.num2()
+                                    )
+        table.append(lession_dic)
+    return table
 
 
 if __name__ == '__main__':
+    table = get_table(semester_id=1, username='', password='')
+    print(table)
 
 
-    c = Course(which_semester=2, username='', password='')
 
-    info_list = c.get_info_list()
-    for i in info_list:
-        l = Lession(i)
-        print(l.teacher())
-        print(l.name())
-        print(l.order())
 

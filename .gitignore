@@ -1,0 +1,16 @@
+
+
+
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+build
+
+
+password.py
+setup.py
+
+__pycache__
+
