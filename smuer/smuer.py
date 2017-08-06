@@ -1,15 +1,9 @@
 
-#-*-coding:utf-8-*-
-#!/usr/bin/env python3
-#coding=utf-8
 
-#author='Jiayuan zhuo'
-#github='awefight'
-#email= '547780662@qq.com'
 
-from home import Third_request
-from courses import get_table
-from grade import get_grade_table, caculate_grade
+from .home import Third_request
+from .courses import get_table
+from .grade import get_grade_table, caculate_grade
 
 class Smuer(object):
     """docstring for Smuer"""
