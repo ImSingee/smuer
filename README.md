@@ -50,10 +50,14 @@ pip install smuer
     ''' return a string contaning e-card balance info'''
     
     def get_courses_table(self, semester_id):
-    '''return a dict containing course arrangement info'''
+    '''return a list contaning several dicts . 
+       every course ' s info was structured,  
+       and save into a dic'''
     
     def get_grade_table(self, semester_id):
-    ''' return a dict contaning grade info'''
+    '''return a list contaning several dicts . 
+       every course ' s grade_info was structured,  
+       and save into a dic'''
     
     def caculate_grade(self, *semester_id):
     ''' return the averge point of the semesters'''
