@@ -35,8 +35,7 @@ pip install smuer
     table = student.get_grade_table(1)
     print(table)
     
-    # caculate the acerage point of 1st semester
-    
+    # caculate the average point of 1st semester
     av1 = student.caculate_grade(1)
     print(av1)
     
@@ -51,20 +50,23 @@ pip install smuer
     
     def get_courses_table(self, semester_id):
     '''return a list contaning several dicts . 
-       every course ' s info was structured,  
-       and save into a dic'''
+       every dict contains the structured course info,  
+    '''
     
     def get_grade_table(self, semester_id):
     '''return a list contaning several dicts . 
-       every course ' s grade_info was structured,  
-       and save into a dic'''
+       every dict contains the structured grade info'''
     
     def caculate_grade(self, *semester_id):
-    ''' return the averge point of the semesters'''
+    ''' return the average point of the semesters'''
+
+    def get_active_tiezi(self):
+    '''return a list contaning several dicts . 
+       every dict contains the structured active_tiezi info'''
 
 ## Todoist
 
-- [ ]  Tiezi read and post  
+- [ ] get details of Tiezi
 - [ ] get library info
 - [ ] evaluate teaching
 
