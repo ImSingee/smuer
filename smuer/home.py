@@ -53,6 +53,7 @@ class Second_request(object):
         lt = r1.get_lt()
         execution = r1.get_execution()
         login_cookie = r1.get_cookie()
+        self.login_cookie = login_cookie
         data = {'execution': execution,
                 'username': username,
                 'password': password,
@@ -76,22 +77,64 @@ class Second_request(object):
             return self.headers['Location']
         except Exception as e:
             print(e)
-            print("failed to get 'location' , please check your username and password ")
+            print("failed to get 'location' , please check your username and password or try again ")
     def get_cookie(self):
         return self.headers['Set-Cookie'].split(';')
+
+    def get_headers(self):
+        return self.headers
+
+def construct_dict(**kw):
+    return kw
+
 
 #利用第二步获取的参数继续访问
 class Third_request(object):
 
     def __init__(self, username=None, password=None):
+
+        #获取第三次请求的地址
         r = Second_request(username=username, password=password)
         url = r.get_location()
         home_r = requests.get(url)
         self.content = home_r.text
+        self.res_headers = home_r.headers
+        self.req_headers = r.get_headers()
+        self.login_cookie = r.login_cookie
+    
+    def get_req_headers(self):
+        return self.req_headers
 
+    def get_headers(self):
+        return self.res_headers
 
-    def get_tiezi():
-        pass
+    def get_cookie(self):
+        return self.headers['Set-Cookie']
+
+    def get_content(self):
+
+        return self.content
+
+    def get_tiezi(self):
+
+        raw_text = self.content
+        for i in [" ", "  ", "\n", "\t"]:
+            raw_text = raw_text.replace(i, "A")
+        pattern_s = r'<divAclass="topic"><aAhref="(.*?)"Atitle.*?Atarget="_blank">(.*?)</a></div>A最后.*?blank">(.*?)</a></span>.*?date">(.*?)</span>'
+        pattern = re.compile(pattern_s, re.S)
+        info_list = re.findall(pattern, raw_text)
+        jar = []
+        for tiezi in info_list:
+            url = "https://portal.shmtu.edu.cn"+tiezi[0]
+            title = tiezi[1]
+            poster = tiezi[2]
+            publish_date = tiezi[3]
+            dic = construct_dict(url=url,
+                                 title=title,
+                                 poster=poster,
+                                 publish_date=publish_date)
+            jar.append(dic)
+        return jar
 
     def get_card_money(self):
         try:
@@ -108,28 +151,22 @@ class Third_request(object):
         pass
 
 
-# class Smuer():
 
-
-#     def __init__(self, username, password):
-#         self.username = username
-#         self.password = password
-        
-
-#     def get_card_info(self):
-#         try:
-#             t = Third_request()
-#             info = t.get_card_money()
-#         except Exception as e:
-#             print(e)
-#         return info
 
 
 
 if __name__ == '__main__':
-    t = Third_request(username='', password='')
+    from password import my_password, my_username
+    
     try:
-        print(t.get_card_money())
+        # print(t.get_card_money())
+        # print(t.get_headers())
+        # print(t.get_req_headers())
+        print(t.get_tiezi())
+        
+        # headers = {'Cookie': t.get_cookie()}
+        # content = requests.get(URL, headers=headers).text
+        # print(text)
     except Exception as e:
         print(e)
 
