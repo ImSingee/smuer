@@ -1,9 +1,8 @@
 
-
-
-from .home import Third_request
-from .courses import get_table
-from .grade import get_grade_table, caculate_grade
+#coding=utf-8
+from home import Third_request
+from courses import get_table
+from grade import get_grade_table, caculate_grade
 
 class Smuer(object):
     """docstring for Smuer"""
@@ -51,7 +50,12 @@ class Smuer(object):
         
         average = caculate_grade(*semester_id, username=self.username, password=self.password)
         return average
-    
+
+    def get_recent_tiezi(self, **kw):
+
+        r = Third_request(username=self.username, password=self.password)
+        return r.get_tiezi()
+        
     def get_library_info():
         pass
 
@@ -60,10 +64,7 @@ if __name__ == '__main__':
     from password import my_password, my_username
     s = Smuer(password=my_password,
               username=my_username)
-
-    print(s.caculate_grade(2))
-    print(s.get_card_info())
-    print(s.get_courses_table(2))
-    print(s.get_grade_table(1))
+    print(s.get_courses_table(1))
+    print(s.get_recent_tiezi())
 
 
