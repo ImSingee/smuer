@@ -51,7 +51,7 @@ class Smuer(object):
         average = caculate_grade(*semester_id, username=self.username, password=self.password)
         return average
 
-    def get_recent_tiezi(self, **kw):
+    def get_active_tiezi(self, **kw):
 
         r = Third_request(username=self.username, password=self.password)
         return r.get_tiezi()
@@ -64,7 +64,7 @@ if __name__ == '__main__':
     from password import my_password, my_username
     s = Smuer(password=my_password,
               username=my_username)
-    print(s.get_courses_table(1))
-    print(s.get_recent_tiezi())
+    # print(s.get_courses_table(1))
+    print(s.get_active_tiezi())
 
 
