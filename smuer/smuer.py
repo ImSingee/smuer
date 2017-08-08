@@ -1,5 +1,6 @@
-
 #coding=utf-8
+#-*-coding:utf-8-*-
+#!/usr/bin/env python3
 from home import Third_request
 from courses import get_table
 from grade import get_grade_table, caculate_grade
