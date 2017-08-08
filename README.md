@@ -39,9 +39,13 @@ pip install smuer
     av1 = student.caculate_grade(1)
     print(av1)
     
-    # caculate the average point of 2nd and 3rd semester
-    av2_3 = student.caculate_grade(2,3)
+    # calculate the average point of 2nd and 3rd semester
+    av2_3 = student.calculate_grade(2,3)
     print(av2_3)
+
+    #get active tiezi
+    tiezis = student.get_active_tiezi()
+    print(tiezis)
 
 ## Api
 
