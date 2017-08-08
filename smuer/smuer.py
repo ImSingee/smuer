@@ -3,7 +3,8 @@
 #!/usr/bin/env python3
 from home import Third_request
 from courses import get_table
-from grade import get_grade_table, caculate_grade
+from grade import get_grade_table, calculate_grade
+
 
 class Smuer(object):
     """docstring for Smuer"""
@@ -47,9 +48,9 @@ class Smuer(object):
                         )
         return table
 
-    def caculate_grade(self, *semester_id):
+    def calculate_grade(self, *semester_id):
         
-        average = caculate_grade(*semester_id, username=self.username, password=self.password)
+        average = calculate_grade(*semester_id, username=self.username, password=self.password)
         return average
 
     def get_active_tiezi(self, **kw):
@@ -67,5 +68,6 @@ if __name__ == '__main__':
               username=my_username)
     # print(s.get_courses_table(1))
     print(s.get_active_tiezi())
+    print(s.calculate_grade(1))
 
 

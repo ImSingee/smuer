@@ -174,7 +174,7 @@ class Handle_row(object):
 
 
 
-class Caculate(object):
+class Calculate(object):
     def __init__(self, username=None, password=None, which_semester=None):
         t = Table(username=username, password=password, which_semester=which_semester)
         table = t.get_table()
@@ -235,14 +235,14 @@ def get_grade_table(username, password, semester_id=None):
 
 
 
-def caculate_grade(*args, username=None, password=None):
+def calculate_grade(*args, username=None, password=None):
 
     #cp : produt of (credit*point)
     semester_id_list = args
     cp_sum_list = []
     credit_sum_list = []
     for s in semester_id_list:
-        c = Caculate(username=username, password=password, which_semester=s)
+        c = Calculate(username=username, password=password, which_semester=s)
         cp_sum = c.get_cp_sum()
         cp_sum_list.append(cp_sum)
         credit_sum = c.get_credit_sum()
@@ -264,7 +264,7 @@ def caculate_grade(*args, username=None, password=None):
 
 if __name__ == '__main__':
     
-    print(caculate_grade(1, 2, username='', password=''))
+    print(calculate_grade(1,2, username='', password=''))
 
     # c = Caculate(username='', password='', which_semester=2)
     # #this semester
