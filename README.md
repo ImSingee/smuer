@@ -10,6 +10,8 @@ smuer is an open source api for smu digital platform. Acessing your personal acc
 
 ## Installation
 
+python3 is required
+
 smuer can be installed with this little one-line command:
 
 ```python
